@@ -1,0 +1,30 @@
+{
+IF: ['sum(two lines) > the third line']
+THEN: 'the shape is triangle'
+DESCRIPTION: 'triangle'
+}
+{
+IF: ['the shape is triangle', 'two lines are equal']
+THEN: 'the shape is isosceles triangle'
+DESCRIPTION: 'isosceles triangle'
+}
+{
+IF: ['the shape is triangle', 'three lines are equal']
+THEN: 'the shape is equilateral triangle'
+DESCRIPTION: 'equilateral triangle'
+}
+{
+IF: ['the shape is triangle', 'three angles are acute angles']
+THEN: 'the shape is acute triangle'
+DESCRIPTION: 'acute triangle'
+}
+{
+IF: ['the shape is triangle', 'one angle is right angle']
+THEN: 'the shape is right triangle'
+DESCRIPTION: 'right triangle'
+}
+{
+IF: ['the shape is triangle', 'one angle is obtuse angle']
+THEN: 'the shape is obtuse triangle'
+DESCRIPTION: 'obtuse triangle'
+}
