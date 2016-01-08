@@ -24,6 +24,9 @@ class Rule:
         self.id = id_count
         id_count += 1
 
+    def get_antecedent(self):
+        return self.antecedent
+
     def __str__(self):
         s = ''
         if self.description:
@@ -33,7 +36,7 @@ class Rule:
             s += ('%s\n' % ant)
             if ant != self.antecedent[-1]:
                 s += ('\tand\t')
-        s += ('THEN\t%s' % self.consequent)
+        s += ('THEN\t%s\n' % self.consequent)
         return s
 
 if __name__ == '__main__':
