@@ -28,3 +28,8 @@ IF: ['the shape is triangle', 'one angle is obtuse angle']
 THEN: 'the shape is obtuse triangle'
 DESCRIPTION: 'obtuse triangle'
 }
+{
+IF: ['the shape is acute triangle', 'the shape is equilateral triangle']
+THEN: 'the shape is acute and equilateral triangle'
+DESCRIPTION: 'acute and equilateral triangle'
+}

@@ -89,6 +89,8 @@ class Engine:
 
     def run(self):
         while self.condition_stack:
+            # test
+            print(self.condition_stack)
             cons = self.pop_condition_stack()
             if not self.__hit_consequent__(cons):
                 print('WARNING: No sufficient facts!\n')
@@ -111,4 +113,5 @@ if __name__ == '__main__':
     e = Engine(r, f)
     print(e)
     e.goal('the shape is obtuse triangle')
+    e.goal('the shape is equilateral triangle')
     e.run()
