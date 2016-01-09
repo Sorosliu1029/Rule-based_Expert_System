@@ -1,0 +1,2 @@
+sum(two lines) > the third line
+three lines are equal

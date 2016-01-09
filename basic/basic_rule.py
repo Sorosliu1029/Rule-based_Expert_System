@@ -24,9 +24,6 @@ class Rule:
         self.id = id_count
         id_count += 1
 
-    def get_antecedent(self):
-        return self.antecedent
-
     def __str__(self):
         s = ''
         if self.description:
