@@ -11,70 +11,87 @@
 
 """
 from cv2.cv import *
-close_threshold = 100
-inf_number = 100000
-def calculate_gradient(line):
-    global grad, inf_number
+import math
+__author__ = 'Soros Liu'
+
+
+def show_image(image, title='New Image'):
+    NamedWindow(title, 1)
+    ShowImage(title, image)
+
+
+def calculate_line_length(line):
+    return ((line[0][0] - line[1][0]) ** 2 + (line[0][1] - line[1][1]) ** 2) ** 0.5
+
+
+def calculate_line_angle(line):
     try:
-        grad[line] = (line[0][1] - line[1][1]) / (line[0][0] - line[1][0])
+        k = (line[0][1] - line[1][1]) / (line[0][0] - line[1][0])
     except ZeroDivisionError:
-        grad[line] = inf_number
+        k = 100000
+    finally:
+        return math.degrees(math.atan(k))
 
-def close_enough(dot1, dot2):
-    global close_threshold
-    return ((dot1[0] - dot2[0]) ** 2 + (dot1[1] - dot2[1]) ** 2) < close_threshold
+class PreHandler():
+    """
 
-def mergable_lines(line1, line2):
-    global grad
-    if (close_enough(line1[0], line2[0]) and close_enough(line1[1], line2[1])):
-        print(abs(grad.get(line1) - grad.get(line2)))
-    return ((abs(grad.get(line1) - grad.get(line2)) < 5) and
-            (close_enough(line1[0], line2[0]) and close_enough(line1[1], line2[1])))
+    """
+    __close_threshold = 800
+    __parallel_threshold = 20
 
-def average_dot(line1, line2):
-    return ((line1[0][0] + line2[0][0]) / 2, (line1[0][1] + line2[0][1]) / 2), \
-            ((line1[1][0] + line2[1][0]) / 2, (line1[1][1] + line2[1][1]) / 2)
+    def __init__(self, source):
+        self.grad = {}
+        self.basic_facts = {}
+        self.merged_lines = []
+        self.src = LoadImage(source, 0)
+        self.dst = CreateImage(GetSize(self.src), 8, 1)
+        self.rst = CreateImage(GetSize(self.src), 8, 3)
+        Canny(self.src, self.dst, 10, 50, 3)
+        self.cv_lines = HoughLines2(self.dst, CreateMemStorage(0),
+                                    CV_HOUGH_PROBABILISTIC, 1, CV_PI/180, 50, 50, 10)
+        map(self.calculate_gradient, self.cv_lines)
+        self.cv_line_num = len(self.cv_lines)
+        self.merge_lines()
+        self.calculate_basic_facts()
+        # for fact in self.basic_facts.items():
+        #     print(fact)
+        # self.draw_lines()
+        # show_image(self.src, 'src')
+        # show_image(self.rst, 'rst')
+        # WaitKey(0)
 
-src = LoadImage('../test/test0.png', 0)
-dst = None
-color_dst = None
-storage = CreateMemStorage(0)
+    def calculate_gradient(self, line):
+        try:
+            self.grad[line] = (line[0][1] - line[1][1]) / (line[0][0] - line[1][0])
+        except ZeroDivisionError:
+            self.grad[line] = (line[0][1] - line[1][1])
 
-dst = CreateImage(GetSize(src), 8, 1)
-color_dst = CreateImage(GetSize(src), 8, 3)
+    def close_enough(self, dot1, dot2):
+        return ((dot1[0] - dot2[0]) ** 2 + (dot1[1] - dot2[1]) ** 2) < self.__close_threshold
 
-Canny(src, dst, 10, 50, 3)
-# CvtColor(dst, color_dst, CV_GRAY2BGR)
-cv_lines = HoughLines2(dst, storage, CV_HOUGH_PROBABILISTIC, 1, CV_PI/180, 50, 50, 10)
-grad = {}
-map(calculate_gradient, cv_lines)
-cv_line_numbers = len(cv_lines)
-merged_lines = []
-for i in range(cv_line_numbers):
-    for j in range(i+1, cv_line_numbers):
-        if mergable_lines(cv_lines[i], cv_lines[j]):
-            merged_lines.append(average_dot(cv_lines[i], cv_lines[j]))
+    def mergable_lines(self, line1, line2):
+        return ((abs(self.grad.get(line1) - self.grad.get(line2)) < self.__parallel_threshold) and
+                (self.close_enough(line1[0], line2[0]) and self.close_enough(line1[1], line2[1])))
 
-# for line in cv_lines:
-#     print(line)
-# print('----------------\n')
-# for line in merged_lines:
-#     print(line)
-# print('----------------\n')
-# for key, value in grad.items():
-#     print(value)
+    def average_dot(self, line1, line2):
+        return ((line1[0][0] + line2[0][0]) / 2, (line1[0][1] + line2[0][1]) / 2), \
+                ((line1[1][0] + line2[1][0]) / 2, (line1[1][1] + line2[1][1]) / 2)
 
-for line in merged_lines:
-    Line(color_dst, line[0], line[1], CV_RGB(255, 0, 0), 1, CV_AA, 0)
+    def merge_lines(self):
+        for i in range(self.cv_line_num):
+            for j in range(i+1, self.cv_line_num):
+                if self.mergable_lines(self.cv_lines[i], self.cv_lines[j]):
+                    self.merged_lines.append(self.average_dot(self.cv_lines[i], self.cv_lines[j]))
 
-# Line(color_dst, lines[0][0], lines[0][1], CV_RGB(255, 0, 0), 1, CV_AA, 0)
-NamedWindow('src', 1)
-ShowImage('src', src)
+    def draw_lines(self):
+        for line in self.merged_lines:
+            Line(self.rst, line[0], line[1], CV_RGB(255, 0, 0), 1, CV_AA, 0)
 
-NamedWindow('dst', 1)
-ShowImage('dst', dst)
+    def calculate_basic_facts(self):
+        for line in self.merged_lines:
+            self.basic_facts[line] = (calculate_line_length(line),
+                                      calculate_line_angle(line))
 
-NamedWindow('hough', 1)
-ShowImage('hough', color_dst)
-
-WaitKey(0)
+if __name__ == '__main__':
+    # test
+    handler = PreHandler('../test/test0.png')
