@@ -8,7 +8,7 @@
 #
 #                                                                          All Rights Reserved
 """
-
+not used in this project .... sad .....
 """
 from cv2.cv import *
 import math
