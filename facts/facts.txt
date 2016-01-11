@@ -1,3 +1,30 @@
-sum(two lines) > the third line
-three lines are equal
-one angle is obtuse angle
+{
+two lines are equal
+(102.00, 290.50)-->(102.00, 82.50): Length: 208.00, Angle:90.00
+(103.00, 289.00)-->(298.00, 289.00): Length: 195.00, Angle:-0.00
+}
+{
+two lines are vertical
+(102.00, 290.50)-->(102.00, 82.50): Length: 208.00, Angle:90.00
+(103.00, 289.00)-->(298.00, 289.00): Length: 195.00, Angle:-0.00
+}
+{
+one angle is right angle
+(102.00, 290.50)-->(102.00, 82.50): Length: 208.00, Angle:90.00
+(103.00, 289.00)-->(298.00, 289.00): Length: 195.00, Angle:-0.00
+}
+{
+two lines are equal
+(102.00, 290.50)-->(102.00, 82.50): Length: 208.00, Angle:90.00
+(146.00, 130.00)-->(294.00, 283.00): Length: 212.87, Angle:45.95
+}
+{
+two lines are equal
+(103.00, 289.00)-->(298.00, 289.00): Length: 195.00, Angle:-0.00
+(146.00, 130.00)-->(294.00, 283.00): Length: 212.87, Angle:45.95
+}
+{
+one angle is acute angle
+(103.00, 289.00)-->(298.00, 289.00): Length: 195.00, Angle:-0.00
+(146.00, 130.00)-->(294.00, 283.00): Length: 212.87, Angle:45.95
+}

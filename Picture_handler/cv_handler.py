@@ -209,8 +209,9 @@ class Fact:
         self.about = about
 
     def __str__(self):
-        s = self.fact + '\n'
+        s = '{\n' + self.fact + '\n'
         s += '\n'.join(list(map(str, self.about)))
+        s += '\n}\n'
         return s
 
 
@@ -248,10 +249,13 @@ class FactGenerator:
                 self.__about_length(self.lines[i], self.lines[j])
                 self.__about_angle(self.lines[i], self.lines[j])
 
+    def record_fact(self):
+        self.file.writelines(list(map(str, self.facts)))
+
 if __name__ == '__main__':
     # test
     hough_argv = 50
-    handler = PreHandler('../test/test9.png')
+    handler = PreHandler('../test/test5.png')
     print('----hough lines---- ' + str(len(handler.cv_int_lines)))
     for line in handler.cv_int_lines:
         handler.draw_hide(line)
@@ -268,6 +272,7 @@ if __name__ == '__main__':
         handler.draw_lines(fact.about)
         print(fact)
     print('-------end---------')
+    generator.record_fact()
     show_image(handler.hide, 'hough')
     show_image(handler.rst, 'result')
     show_image(handler.dst, 'canny')
