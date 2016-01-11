@@ -11,8 +11,8 @@
 
 """
 import cv2
-import numpy as np
 import math
+
 __author__ = 'Soros Liu'
 
 
@@ -33,6 +33,7 @@ class ContourLine:
     """
 
     """
+
     def __init__(self, point1, point2):
         self.point1 = point1
         self.point2 = point2
@@ -49,15 +50,15 @@ def get_contours(img):
     ret, binary = cv2.threshold(gray, 127, 255, cv2.THRESH_BINARY)
     contours, hierarchy = cv2.findContours(binary, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     for i in range(1, len(contours)):
-        approx = cv2.approxPolyDP(contours[i], 0.01*cv2.arcLength(contours[i], True), True)
+        approx = cv2.approxPolyDP(contours[i], 0.01 * cv2.arcLength(contours[i], True), True)
         contours[i] = approx
     return contours
 
 
 def generate_lines(contour):
     lines = []
-    for i in range(len(contour)-1):
-        lines.append(ContourLine((contour[i][0][0], contour[i][0][1]), (contour[i+1][0][0], contour[i+1][0][1])))
+    for i in range(len(contour) - 1):
+        lines.append(ContourLine((contour[i][0][0], contour[i][0][1]), (contour[i + 1][0][0], contour[i + 1][0][1])))
     lines.append(ContourLine((contour[-1][0][0], contour[-1][0][1]), (contour[0][0][0], contour[0][0][1])))
     return lines
 
@@ -66,9 +67,10 @@ class Handler:
     """
 
     """
+
     def __init__(self, source):
         self.src = cv2.imread(source)
-        self.contours = get_contours(self.src)[1:]   # contours are in clock-wise order
+        self.contours = get_contours(self.src)[1:]  # contours are in clock-wise order
         self.contour_dict = {}
 
     def generate_contour_dict(self):
@@ -80,6 +82,7 @@ class Fact:
     """
 
     """
+
     def __init__(self, fact, about):
         self.fact = fact
         self.about = about
@@ -121,9 +124,9 @@ def get_inner_product(vector1, vector2):
 def get_included_angle(line1, line2):
     meeting_point = get_meeting_point(line1, line2)
     if not meeting_point:
-        return None          # lines not met
+        return None  # lines not met
     elif meeting_point == 'parallel':
-        return 'parallel'    # parallel lines have no included angle
+        return 'parallel'  # parallel lines have no included angle
     else:
         middle_point1 = average_point(line1.point1, line1.point2)
         middle_point2 = average_point(line2.point1, line2.point2)
@@ -158,6 +161,40 @@ def is_obtuse(line1, line2):
     return included_angle and included_angle > 90.0
 
 
+def is_closure(lines):
+    result = True
+    for i in range(len(lines)-1):
+        result = result and get_meeting_point(lines[i], lines[i+1])
+    result = result and get_meeting_point(lines[-1], lines[0])
+    return result
+
+
+def lines_closure(facts, lines):
+    if len(lines) == 3 and is_closure(lines):
+        facts.append(Fact('three closure lines', lines))
+    elif len(lines) == 4 and is_closure(lines):
+        facts.append(Fact('four closure lines', lines))
+    elif len(lines) == 5 and is_closure(lines):
+        facts.append(Fact('five closure lines', lines))
+    elif len(lines) == 6 and is_closure(lines):
+        facts.append(Fact('six closure lines', lines))
+    else:
+        facts.append(Fact('no closure lines', lines))
+
+
+def is_lines_all_equal(lines):
+    result = True
+    for i in range(len(lines)-1):
+        result = result and is_equal(lines[i], lines[i+1])
+    result = result and is_equal(lines[-1], lines[0])
+    return result
+
+
+def lines_all_equal(facts, lines):
+    if is_lines_all_equal(lines):
+        facts.append(Fact('lines_all_equal', lines))
+
+
 def about_angle(facts, line1, line2):
     if is_parallel(line1, line2):
         facts.append(Fact('two lines are parallel', [line1, line2]))
@@ -179,16 +216,40 @@ def generate_contour_facts(lines):
     line_facts = []
     angle_facts = []
     for i in range(len(lines)):
-        for j in range(i+1, len(lines)):
+        for j in range(i + 1, len(lines)):
             about_length(line_facts, lines[i], lines[j])
             about_angle(angle_facts, lines[i], lines[j])
+    lines_closure(line_facts, lines)
+    lines_all_equal(line_facts, lines)
     return line_facts, angle_facts
+
+
+class ContourFact:
+    """
+
+    """
+
+    def __init__(self, line_num, line_facts, angle_facts):
+        self.line_num = line_num
+        self.line_facts = line_facts
+        self.angle_facts = angle_facts
+
+    def __str__(self):
+        s = ('--About Lines-- %d lines\n' % self.line_num)
+        for line in (list(map(str, self.line_facts))):
+            s += line
+        s += '--About Angles--\n'
+        for line in (list(map(str, self.angle_facts))):
+            s += line
+        s += '}\n'
+        return s
 
 
 class FactGenerator:
     """
 
     """
+
     def __init__(self, contour_dict):
         self.contour_dict = contour_dict
         self.file = open('../facts/facts.txt', 'w+')
@@ -198,27 +259,22 @@ class FactGenerator:
             self.file.close()
 
     def generate_fact(self):
+        handled_fact = {}
         for i in range(len(self.contour_dict)):
             lines = self.contour_dict.get(i)
             line_facts, angle_facts = generate_contour_facts(lines)
-            self.file.write('Contour #%d\n{\n--About Lines-- %d lines\n' % (i, len(lines)))
-            self.file.writelines(list(map(str, line_facts)))
-            self.file.write('--About Angles--\n')
-            self.file.writelines(list(map(str, angle_facts)))
-            self.file.write('}\n')
+            cnt_fact = ContourFact(len(lines), line_facts, angle_facts)
+            handled_fact['Contour' + str(i)] = cnt_fact
+            self.file.write('Contour #%d\n{\n' % i)
+            self.file.write(str(cnt_fact))
 
-close_threshold = 10
-equal_threshold = 10
+
+close_threshold = 5
+equal_threshold = 5
 parallel_threshold = 5
 vertical_threshold = 5
 if __name__ == '__main__':
-    handler = Handler('../test/test30.png')
+    handler = Handler('../test/test41.png')
     handler.generate_contour_dict()
-    # print(len(handler.contours))
-    # print('---------------- lines -----------')
-    # for line in handler.contour_dict.values()[0]:
-    #     print(line)
-    # print('--------------end lines ----------')
     generator = FactGenerator(handler.contour_dict)
     generator.generate_fact()
-    # print(len(handler.contours[1]))

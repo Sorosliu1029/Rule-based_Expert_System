@@ -1,5 +1,5 @@
 {
-IF: ['sum(two lines) > the third line']
+IF: ['three closure lines']
 THEN: 'the shape is triangle'
 DESCRIPTION: 'triangle'
 }
