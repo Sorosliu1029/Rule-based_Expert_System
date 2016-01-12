@@ -44,6 +44,8 @@ class Engine:
         self.rule_library = rule_library
         self.fact_library = fact_library
         self.condition_stack = []            # using Python list as stack
+        self.matched_facts = []
+        self.hit_rules = []
 
     def push_condition_stack(self, condition):
         self.condition_stack.append(condition)
@@ -66,10 +68,12 @@ class Engine:
         for fact in facts.line_facts:
             if ant == fact.fact:
                 matched = True
+                self.matched_facts.append(fact)
                 return matched
         for fact in facts.angle_facts:
             if ant == fact.fact:
                 matched = True
+                self.matched_facts.append(fact)
                 return matched
         return matched
 
@@ -78,6 +82,7 @@ class Engine:
         for rule in self.rule_library:
             if cons == getattr(rule, 'consequent'):
                 hit = True
+                self.hit_rules.append(rule)
                 ants = getattr(rule, 'antecedent')
                 for ant in ants:
                     if not self.__match_facts__(ant, contour_index):
@@ -87,6 +92,8 @@ class Engine:
 
     def goal(self, target):
         self.condition_stack = []
+        self.matched_facts = []
+        self.hit_rules = []
         self.push_condition_stack(target)
 
     def run(self, contour_index):
@@ -133,11 +140,16 @@ def main_run(e):
     for i in range(len(e.fact_library)):
         result = e.run(i)
         results.append(result)
-    return results
+    return results, e.matched_facts, e.hit_rules
 
 
 if __name__ == '__main__':
     # test
-    e = setup_engine('../test/test41.png')
-    set_goal(e, 'the shape is triangle')
-    results = main_run(e)
+    e = setup_engine('../test/test10.png')
+    set_goal(e, 'the shape is rectangle')
+    results, matched_facts, hit_rules = main_run(e)
+    # for fact in matched_facts:
+    #     print(fact.fact)
+    # for rule in hit_rules:
+    #     print(rule)
+
