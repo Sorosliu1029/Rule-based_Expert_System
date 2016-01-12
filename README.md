@@ -1,8 +1,8 @@
 ## 基于规则的专家系统 -- 图形检测
 ### 前言
 此项目是**人工智能**的课程项目。具体要求为实现一个*基于规则的专家系统*， 用来进行简单直线型几何图形的形状检测。  
-项目实现的重点在于**规则的表示**， **推理机的构建**， **知识库的构建**， **图形的预处理** 和 **用户界面**。  
-项目实现语言为Python，图形预处理用到了OpenCV， 用户界面用到了wxPython。  
+项目实现的重点在于**规则的表示**， **推理机的构建**， **知识库的构建**， **图片的预处理** 和 **用户界面**。  
+项目实现语言为Python，图片预处理用到了OpenCV， 用户界面用到了wxPython。  
 专家系统的设计参考了[《人工智能 - 智能系统指南》(原书第3版)](https://book.douban.com/subject/11606478/) 第2章。    
 如有任何对项目的改进建议，欢迎评论。 :~) 
 
@@ -11,17 +11,18 @@
 2. [图形检测专家系统的结构](#structure)
 3. [规则的构建和表示](#rule)
 4. [知识库的表示](#knowledge)
-5. [图形的预处理](#pic_handle)
+5. [图片的预处理](#pic_handle)
 6. [数据库的表示](#fact)
 7. [推理引擎的构建 : 后向链接推理技术](#back)
 8. [用户界面](#GUI)
 9. [测试用例](#test)
 10. [总结](#conclusion)
+11. [附录](#addition)
 
 ### <a name='general'></a>概述
 图形检测专家系统的运作流程为：  
 
-* 通过图形预处理得到一组基本事实（即图形中各线段端点坐标）
+* 通过图片预处理得到一组基本事实（即图形中各线段端点坐标）
 * 处理这一组基本事实，产生专家系统的数据库
 * 推理引擎读取外部的规则文档，产生知识库
 * 推理引擎读入数据库
@@ -68,15 +69,47 @@
 ![structure](https://github.com/Sorosliu1029/Rule-based_Expert_System/blob/master/readme_picture/structure.png)  
 图形检测专家系统也由5部分组成：[知识库Knowledge base](https://github.com/Sorosliu1029/Rule-based_Expert_System/blob/master/rules/rules.txt), [数据库Database](https://github.com/Sorosliu1029/Rule-based_Expert_System/blob/master/facts/facts.txt), [推理引擎Inference engine](https://github.com/Sorosliu1029/Rule-based_Expert_System/blob/master/engine/inference_engine.py), [解释设备Explanation facilities, 用户界面User interface](https://github.com/Sorosliu1029/Rule-based_Expert_System/blob/master/GUI/main_frame.py).  
 对应的项目文件夹分别为rules, facts, engine, GUI。  
-另外，由于图形的特殊性，项目文件中还包含[图形预处理器](https://github.com/Sorosliu1029/Rule-based_Expert_System/blob/master/Picture_handler/cv_handler2.py).
+另外，由于图形的特殊性，项目文件中还包含[图片预处理器](https://github.com/Sorosliu1029/Rule-based_Expert_System/blob/master/Picture_handler/cv_handler2.py).
 
 ### <a name='rule'></a>规则的构建和表示
 因为专家系统需要支持动态的加载知识库，所以检测规则不能硬编码在程序中，而是需要长期存储在外部文件中，并在推理引擎中加载。  
-基于以上原因，首先构建了一个Rule类用来表示某条规则
+基于以上原因，首先构建了一个Rule类用来表示某条规则。Rule类包含id(规则编号), antecedent(规则前项), consequent(规则后项), description(规则描述) 这四个类成员。  
+其中， 考虑到图形检测规则的特点，规则前项之间用 ***与*** 逻辑连接。  
+一条典型的规则如下所示：
+> {  
+IF: ['the shape is triangle', 'lines are all equal']  
+THEN: 'the shape is equilateral triangle'  
+DESCRIPTION: 'equilateral triangle'  
+}  
+
+以上规则用来判断一个图形是等边三角形。  
+其他的规则也类似。
 
 ### <a name='knowledge'></a>知识库的表示
+知识库也就是此图形检测专家系统的规则集合。知识库以 txt格式存储，包含了判断图形所需的所有规则。  
+程序运行时，推理引擎从该知识库文件中读取所有规则，并相应地构建所有规则的Rule实例。
 
-### <a name='pic_handle'></a>图形的预处理
+### <a name='pic_handle'></a>图片的预处理
+此图形检测专家系统的直接输入是要检测的图片。为了得到关于图片的数据库，首先需要对图片进行一定程度的预处理。  
+采用的图片处理库是OpenCV，分别尝试了两种得到数据的方法：  
+
+*  霍夫变换：`cv2.HoughLines2()`
+*  轮廓检测：`cv2.findContours()`
+
+1. 霍夫变换：  
+    霍夫变换比较基础，能够得到图片中所有线段的端点坐标。  
+    但是霍夫变换存在几个比较明显的问题：
+    * 参数很难调：在最初的霍夫变换检测线段的尝试中，不同的参数会得到不同的线段集合，不同的图片在同一个参数下检测出来的线段集合质量也参差不齐，很难找到一个合适的霍夫变换参数
+    * 调整霍夫变换的结果很麻烦：由于得到的线段端点并不很精确，故需要再人为地判断这些端点之间的关系。  
+    如判断两个端点是否足够临近，以致能够认为是同一个端点时，需要人为地设置一个临近阈值。但是该临近阈值对于不同的图片有不同的判断结果。有时候阈值太大，以至于将非同一个端点误判为同一个端点，而有时候阈值太小，以至于没有将所有临近端点都判断出来。  
+    这个在图片预处理中很关键，尤其是在判断两直线夹角时。
+    * 当图片中有多个图形时，处理遇到瓶颈：由于霍夫变换得到的是图片中 **所有** 的线段，而不能区分哪些线段属于哪一个图形，故需要另外人为判断线段集合的图形归属问题。这带来了很大的工作量。  
+
+    基于以上问题，和实际尝试中不尽如人意的检测结果，决定放弃使用霍夫变换作为图片预处理的手段。  
+2. 轮廓检测：  
+    轮廓检测也比较基础，相对来说还比霍夫变换简单许多。轮廓检测也是得到线段的端点坐标。但不同于霍夫变换，轮廓检测返回的结果是图形的轮廓顶点（需要经过一个近似的步骤`cv2.approxPolyDP()`）。  
+    也就是说，图片中每个图形都有各自的顶点。更进一步，可以从顶点得到图形的所有边和边与边的关系（夹角大小，是否平行等）。通过这些预处理步骤，可以得到关于图片的基础事实，用来构成以下的数据库。  
+    因为 **轮廓检测的返回值不再有临近端点归并问题， 线段集合的图形归属问题**， 所以最终的图片预处理技术以轮廓检测为基础。
 
 ### <a name='fact'></a>数据库的表示
 
@@ -87,4 +120,6 @@
 ### <a name='test'></a>测试用例
 
 ### <a name='conclusion'></a>总结
+
+### <a name='addition'></a>附录
 
