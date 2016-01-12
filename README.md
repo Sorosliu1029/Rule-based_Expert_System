@@ -242,8 +242,20 @@ some angle facts  here
     ![hexagon](https://github.com/Sorosliu1029/Rule-based_Expert_System/blob/master/readme_picture/hexagon.png)
     * 正六边形：   
     ![regular_hexagon](https://github.com/Sorosliu1029/Rule-based_Expert_System/blob/master/readme_picture/regular_hexagon.png)
+    
+#### B. 混合图形的测试：
+* ![mix10](https://github.com/Sorosliu1029/Rule-based_Expert_System/blob/master/readme_picture/mix10.png)  
+  ![mix11](https://github.com/Sorosliu1029/Rule-based_Expert_System/blob/master/readme_picture/mix11.png)
+* ![mix20](https://github.com/Sorosliu1029/Rule-based_Expert_System/blob/master/readme_picture/mix20.png)  
+  ![mix21](https://github.com/Sorosliu1029/Rule-based_Expert_System/blob/master/readme_picture/mix21.png)
+* ![mix30](https://github.com/Sorosliu1029/Rule-based_Expert_System/blob/master/readme_picture/mix30.png)  
+   ![mix31](https://github.com/Sorosliu1029/Rule-based_Expert_System/blob/master/readme_picture/mix31.png)  
+   ![mix32](https://github.com/Sorosliu1029/Rule-based_Expert_System/blob/master/readme_picture/mix32.png)
 
 ### <a name='conclusion'></a>总结
+以上即是图形检测专家系统的全部内容。  
+其中推理引擎稍作改进可以作为一个通用的后向链接推理的专家系统框架。
 
 ### <a name='addition'></a>附录
-
+此图形检测专家系统的知识库： [知识库](https://github.com/Sorosliu1029/Rule-based_Expert_System/blob/master/rules/rules.txt)  
+此图形检测专家系统的Github托管网址：[Github](https://github.com/Sorosliu1029/Rule-based_Expert_System)
