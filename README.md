@@ -218,7 +218,24 @@ some angle facts  here
             ![obtuse and isosceles triangle](https://github.com/Sorosliu1029/Rule-based_Expert_System/blob/master/readme_picture/obtuse_and_isosceles_triangle.png)
     * 等边三角形：  
         ![equilateral_triangle](https://github.com/Sorosliu1029/Rule-based_Expert_System/blob/master/readme_picture/equilateral_triangle.png)
-2. 四边形：
+2. 四边形：  
+    ![quadrilateral](https://github.com/Sorosliu1029/Rule-based_Expert_System/blob/master/readme_picture/quadrilateral.png)  
+    * 平行四边形：  
+        ![parallelogram](https://github.com/Sorosliu1029/Rule-based_Expert_System/blob/master/readme_picture/parallelogram.png)    
+        * 矩形：   
+            ![rectangle](https://github.com/Sorosliu1029/Rule-based_Expert_System/blob/master/readme_picture/rectangle.png)    
+            * 正方形：  
+                ![square](https://github.com/Sorosliu1029/Rule-based_Expert_System/blob/master/readme_picture/square.png)
+        *  菱形：  
+            ![rhombus](https://github.com/Sorosliu1029/Rule-based_Expert_System/blob/master/readme_picture/rhombus.png)
+    * 梯形：  
+        ![trapezoid](https://github.com/Sorosliu1029/Rule-based_Expert_System/blob/master/readme_picture/trapezoid.png)  
+        * 等腰梯形：  
+            ![isosceles_trapezoid](https://github.com/Sorosliu1029/Rule-based_Expert_System/blob/master/readme_picture/isosceles_trapezoid.png)
+        * 直角梯形：  
+            ![right_trapezoid](https://github.com/Sorosliu1029/Rule-based_Expert_System/blob/master/readme_picture/right_trapezoid.png) 
+3. 五边形：
+4. 六边形：
 
 ### <a name='conclusion'></a>总结
 

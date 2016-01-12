@@ -1,40 +1,49 @@
 Contour #0
 {
---About Lines-- 3 lines
+--About Lines-- 4 lines
 <
-2 lines are equal
-(276, 32)-->(213, 355): Length: 329.09, Angle:-78.96
-(213, 355)-->(151, 31): Length: 329.88, Angle:79.17
->
-<
-3 closure lines
-(151, 31)-->(276, 32): Length: 125.00, Angle:0.46
-(276, 32)-->(213, 355): Length: 329.09, Angle:-78.96
-(213, 355)-->(151, 31): Length: 329.88, Angle:79.17
+4 closure lines
+(24, 99)-->(374, 98): Length: 350.00, Angle:-0.16
+(374, 98)-->(375, 218): Length: 120.00, Angle:89.52
+(375, 218)-->(95, 219): Length: 280.00, Angle:-0.20
+(95, 219)-->(24, 99): Length: 139.43, Angle:59.39
 >
 --About Angles--
 <
-1 angle is acute angle
-(151, 31)-->(276, 32): Length: 125.00, Angle:0.46
-(276, 32)-->(213, 355): Length: 329.09, Angle:-78.96
+1 angle is right angle
+(24, 99)-->(374, 98): Length: 350.00, Angle:-0.16
+(374, 98)-->(375, 218): Length: 120.00, Angle:89.52
 >
 <
 1 angle is acute angle
-(151, 31)-->(276, 32): Length: 125.00, Angle:0.46
-(213, 355)-->(151, 31): Length: 329.88, Angle:79.17
+(24, 99)-->(374, 98): Length: 350.00, Angle:-0.16
+(95, 219)-->(24, 99): Length: 139.43, Angle:59.39
 >
 <
-1 angle is acute angle
-(276, 32)-->(213, 355): Length: 329.09, Angle:-78.96
-(213, 355)-->(151, 31): Length: 329.88, Angle:79.17
+1 angle is right angle
+(374, 98)-->(375, 218): Length: 120.00, Angle:89.52
+(375, 218)-->(95, 219): Length: 280.00, Angle:-0.20
 >
 <
-3 angles are acute angle
-(151, 31)-->(276, 32): Length: 125.00, Angle:0.46
-(276, 32)-->(213, 355): Length: 329.09, Angle:-78.96
-(151, 31)-->(276, 32): Length: 125.00, Angle:0.46
-(213, 355)-->(151, 31): Length: 329.88, Angle:79.17
-(276, 32)-->(213, 355): Length: 329.09, Angle:-78.96
-(213, 355)-->(151, 31): Length: 329.88, Angle:79.17
+1 angle is obtuse angle
+(375, 218)-->(95, 219): Length: 280.00, Angle:-0.20
+(95, 219)-->(24, 99): Length: 139.43, Angle:59.39
+>
+<
+1 pairs of parallel lines
+(24, 99)-->(374, 98): Length: 350.00, Angle:-0.16
+(375, 218)-->(95, 219): Length: 280.00, Angle:-0.20
+>
+<
+1 angles are acute angle
+(24, 99)-->(374, 98): Length: 350.00, Angle:-0.16
+(95, 219)-->(24, 99): Length: 139.43, Angle:59.39
+>
+<
+2 angles are right angle
+(24, 99)-->(374, 98): Length: 350.00, Angle:-0.16
+(374, 98)-->(375, 218): Length: 120.00, Angle:89.52
+(374, 98)-->(375, 218): Length: 120.00, Angle:89.52
+(375, 218)-->(95, 219): Length: 280.00, Angle:-0.20
 >
 }
