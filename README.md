@@ -1,7 +1,7 @@
 ## 基于规则的专家系统 -- 图形检测
 ### 前言
 此项目是**人工智能**的课程项目。具体要求为实现一个*基于规则的专家系统*， 用来进行简单直线型几何图形的形状检测。  
-项目实现的重点在于**规则的表示**， **推理机的构建**， **知识库的构建**， **图片的预处理** 和 **用户界面**。  
+项目实现的重点在于**规则的表示**， **推理引擎的构建**， **知识库的构建**， **图片的预处理** 和 **用户界面**。  
 项目实现语言为Python，图片预处理用到了OpenCV， 用户界面用到了wxPython。  
 专家系统的设计参考了[《人工智能 - 智能系统指南》(原书第3版)](https://book.douban.com/subject/11606478/) 第2章。    
 如有任何对项目的改进建议，欢迎评论。 :~) 
@@ -251,8 +251,11 @@ some angle facts  here
 * ![mix30](https://github.com/Sorosliu1029/Rule-based_Expert_System/blob/master/readme_picture/mix30.png)  
    ![mix31](https://github.com/Sorosliu1029/Rule-based_Expert_System/blob/master/readme_picture/mix31.png)  
    ![mix32](https://github.com/Sorosliu1029/Rule-based_Expert_System/blob/master/readme_picture/mix32.png)
+* ![mix40](https://github.com/Sorosliu1029/Rule-based_Expert_System/blob/master/readme_picture/mix40.png)  
+   ![mix41.png](https://github.com/Sorosliu1029/Rule-based_Expert_System/blob/master/readme_picture/mix41.png)
 
 ### <a name='conclusion'></a>总结
+图形界面中的 *Matched Facts文本框* 和 *Hit Rules文本框* 可以作为此图形检测专家系统的解释设备。  
 以上即是图形检测专家系统的全部内容。  
 其中推理引擎稍作改进可以作为一个通用的后向链接推理的专家系统框架。
 
