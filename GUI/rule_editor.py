@@ -42,7 +42,7 @@ class EditorFrame(wx.Frame):
             f.write(self.__create_formatted_rule__())
 
     def cancel_creation(self, event):
-        pass
+        self.Close()
 
     def __create_formatted_rule__(self):
         s = ''

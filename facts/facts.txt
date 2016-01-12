@@ -2,51 +2,70 @@ Contour #0
 {
 --About Lines-- 3 lines
 <
-three closure lines
-(318.00, 187.00)-->(317.00, 338.00): Length: 151.00, Angle:-89.62
-(317.00, 338.00)-->(106.00, 337.00): Length: 211.00, Angle:0.27
-(106.00, 337.00)-->(318.00, 187.00): Length: 259.70, Angle:-35.28
+3 closure lines
+(318, 187)-->(317, 338): Length: 151.00, Angle:-89.62
+(317, 338)-->(106, 337): Length: 211.00, Angle:0.27
+(106, 337)-->(318, 187): Length: 259.70, Angle:-35.28
 >
 --About Angles--
 <
-one angle is right angle
-(318.00, 187.00)-->(317.00, 338.00): Length: 151.00, Angle:-89.62
-(317.00, 338.00)-->(106.00, 337.00): Length: 211.00, Angle:0.27
+1 angle is right angle
+(318, 187)-->(317, 338): Length: 151.00, Angle:-89.62
+(317, 338)-->(106, 337): Length: 211.00, Angle:0.27
 >
 <
-one angle is acute angle
-(318.00, 187.00)-->(317.00, 338.00): Length: 151.00, Angle:-89.62
-(106.00, 337.00)-->(318.00, 187.00): Length: 259.70, Angle:-35.28
+1 angle is acute angle
+(318, 187)-->(317, 338): Length: 151.00, Angle:-89.62
+(106, 337)-->(318, 187): Length: 259.70, Angle:-35.28
 >
 <
-one angle is acute angle
-(317.00, 338.00)-->(106.00, 337.00): Length: 211.00, Angle:0.27
-(106.00, 337.00)-->(318.00, 187.00): Length: 259.70, Angle:-35.28
+1 angle is acute angle
+(317, 338)-->(106, 337): Length: 211.00, Angle:0.27
+(106, 337)-->(318, 187): Length: 259.70, Angle:-35.28
+>
+<
+2 angles are acute angle
+(318, 187)-->(317, 338): Length: 151.00, Angle:-89.62
+(106, 337)-->(318, 187): Length: 259.70, Angle:-35.28
+(317, 338)-->(106, 337): Length: 211.00, Angle:0.27
+(106, 337)-->(318, 187): Length: 259.70, Angle:-35.28
+>
+<
+1 angles are right angle
+(318, 187)-->(317, 338): Length: 151.00, Angle:-89.62
+(317, 338)-->(106, 337): Length: 211.00, Angle:0.27
 >
 }
 Contour #1
 {
 --About Lines-- 3 lines
 <
-three closure lines
-(21.00, 42.00)-->(357.00, 87.00): Length: 339.00, Angle:7.63
-(357.00, 87.00)-->(53.00, 125.00): Length: 306.37, Angle:-7.13
-(53.00, 125.00)-->(21.00, 42.00): Length: 88.96, Angle:68.92
+3 closure lines
+(21, 42)-->(357, 87): Length: 339.00, Angle:7.63
+(357, 87)-->(53, 125): Length: 306.37, Angle:-7.13
+(53, 125)-->(21, 42): Length: 88.96, Angle:68.92
 >
 --About Angles--
 <
-one angle is acute angle
-(21.00, 42.00)-->(357.00, 87.00): Length: 339.00, Angle:7.63
-(357.00, 87.00)-->(53.00, 125.00): Length: 306.37, Angle:-7.13
+1 angle is acute angle
+(21, 42)-->(357, 87): Length: 339.00, Angle:7.63
+(357, 87)-->(53, 125): Length: 306.37, Angle:-7.13
 >
 <
-one angle is acute angle
-(21.00, 42.00)-->(357.00, 87.00): Length: 339.00, Angle:7.63
-(53.00, 125.00)-->(21.00, 42.00): Length: 88.96, Angle:68.92
+1 angle is acute angle
+(21, 42)-->(357, 87): Length: 339.00, Angle:7.63
+(53, 125)-->(21, 42): Length: 88.96, Angle:68.92
 >
 <
-one angle is obtuse angle
-(357.00, 87.00)-->(53.00, 125.00): Length: 306.37, Angle:-7.13
-(53.00, 125.00)-->(21.00, 42.00): Length: 88.96, Angle:68.92
+1 angle is obtuse angle
+(357, 87)-->(53, 125): Length: 306.37, Angle:-7.13
+(53, 125)-->(21, 42): Length: 88.96, Angle:68.92
+>
+<
+2 angles are acute angle
+(21, 42)-->(357, 87): Length: 339.00, Angle:7.63
+(357, 87)-->(53, 125): Length: 306.37, Angle:-7.13
+(21, 42)-->(357, 87): Length: 339.00, Angle:7.63
+(53, 125)-->(21, 42): Length: 88.96, Angle:68.92
 >
 }

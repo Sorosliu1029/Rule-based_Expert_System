@@ -3,10 +3,10 @@
 
 """
 import re
-import string
 import sys
 sys.path.append('..')
 from basic.basic_rule import Rule
+from Picture_handler.cv_handler2 import Handler, FactGenerator
 
 __author__ = 'liuyang'
 
@@ -20,9 +20,9 @@ re_description_part = re.compile(r'DESCRIPTION:\s+(\'.*?\')')
 def generate_a_rule(rule):
     if_part = ''
     exec('if_part = ' + re_if_part.findall(rule)[0])
-    then_part = re_then_part.findall(rule)
-    description_part = re_description_part.findall(rule)
-    return Rule(if_part, then_part[0].strip('"\''), description_part[0].strip('"\''))
+    then_part = re_then_part.findall(rule)[0]
+    description_part = re_description_part.findall(rule)[0]
+    return Rule(if_part, then_part.strip('"\''), description_part.strip('"\''))
 
 
 def separate_rules(rules):
@@ -34,12 +34,6 @@ def read_rules(rule_file):
     with open('../rules/' + rule_file) as f:
         rules = ''.join(f.read().splitlines())
     return separate_rules(rules)
-
-
-def read_facts(fact_file):
-    with open('../facts/' + fact_file) as f:
-        facts = list(map(string.strip, f.readlines()))
-    return facts
 
 
 class Engine:
@@ -66,35 +60,49 @@ class Engine:
     def condition_stack_is_empty(self):
         return not self.condition_stack
 
-    def get_rule_library(self):
-        return '\n'.join(list(map(str, self.rule_library)))
+    def __match_facts__(self, ant, contour_index):
+        facts = self.fact_library['Contour' + str(contour_index)]
+        matched = False
+        for fact in facts.line_facts:
+            if ant == fact.fact:
+                matched = True
+                return matched
+        for fact in facts.angle_facts:
+            if ant == fact.fact:
+                matched = True
+                return matched
+        return matched
 
-    def __match_facts__(self, ant):
-        return ant in self.fact_library
-
-    def __hit_consequent__(self, cons):
+    def __hit_consequent__(self, cons, contour_index):
         hit = False
         for rule in self.rule_library:
             if cons == getattr(rule, 'consequent'):
                 hit = True
                 ants = getattr(rule, 'antecedent')
                 for ant in ants:
-                    if not self.__match_facts__(ant):
+                    if not self.__match_facts__(ant, contour_index):
                         self.push_condition_stack(ant)
                 break
         return hit
 
     def goal(self, target):
+        self.condition_stack = []
         self.push_condition_stack(target)
 
-    def run(self):
+    def run(self, contour_index):
         while self.condition_stack:
             # test
-            print(self.condition_stack)
+            # print(self.condition_stack)
             cons = self.pop_condition_stack()
-            if not self.__hit_consequent__(cons):
-                print('WARNING: No sufficient facts!\n')
-                break
+            if not self.__hit_consequent__(cons, contour_index):
+                return 'ERROR: No Sufficient Facts in Contour%d' % contour_index
+        return 'SUCCESS: Find Required Shape in Contour%d' % contour_index
+
+    def main_run(self):
+        pass
+
+    def get_rule_library(self):
+        return '\n'.join(list(map(str, self.rule_library)))
 
     def __str__(self):
         s = ''
@@ -106,12 +114,30 @@ class Engine:
         return s
 
 
+def setup_engine(image_source):
+    handler = Handler(image_source)
+    handler.generate_contour_dict()
+    generator = FactGenerator(handler.contour_dict)
+    generator.generate_fact()
+    r = read_rules('rules.txt')
+    e = Engine(r, generator.handled_facts)
+    return e
+
+
+def set_goal(e, my_goal):
+    e.goal(my_goal)
+
+
+def main_run(e):
+    results = []
+    for i in range(len(e.fact_library)):
+        result = e.run(i)
+        results.append(result)
+    return results
+
+
 if __name__ == '__main__':
     # test
-    r = read_rules('rules.txt')
-    f = read_facts('facts.txt')
-    e = Engine(r, f)
-    print(e)
-    e.goal('the shape is obtuse triangle')
-    e.goal('the shape is equilateral triangle')
-    e.run()
+    e = setup_engine('../test/test41.png')
+    set_goal(e, 'the shape is triangle')
+    results = main_run(e)

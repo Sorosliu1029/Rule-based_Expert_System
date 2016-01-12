@@ -41,7 +41,7 @@ class ContourLine:
         self.angle = calculate_line_angle((point1, point2))
 
     def __str__(self):
-        return '(%.2f, %.2f)-->(%.2f, %.2f): Length: %.2f, Angle:%.2f' % \
+        return '(%d, %d)-->(%d, %d): Length: %.2f, Angle:%.2f' % \
                (self.point1[0], self.point1[1], self.point2[0], self.point2[1], self.length, self.angle)
 
 
@@ -171,13 +171,13 @@ def is_closure(lines):
 
 def lines_closure(facts, lines):
     if len(lines) == 3 and is_closure(lines):
-        facts.append(Fact('three closure lines', lines))
+        facts.append(Fact('3 closure lines', lines))
     elif len(lines) == 4 and is_closure(lines):
-        facts.append(Fact('four closure lines', lines))
+        facts.append(Fact('4 closure lines', lines))
     elif len(lines) == 5 and is_closure(lines):
-        facts.append(Fact('five closure lines', lines))
+        facts.append(Fact('5 closure lines', lines))
     elif len(lines) == 6 and is_closure(lines):
-        facts.append(Fact('six closure lines', lines))
+        facts.append(Fact('6 closure lines', lines))
     else:
         facts.append(Fact('no closure lines', lines))
 
@@ -192,24 +192,57 @@ def is_lines_all_equal(lines):
 
 def lines_all_equal(facts, lines):
     if is_lines_all_equal(lines):
-        facts.append(Fact('lines_all_equal', lines))
+        facts.append(Fact('lines are all equal', lines))
+
+
+def parallel_line_pairs(facts):
+    count = 0
+    lines = []
+    for fact in facts:
+        if fact.fact == '2 lines are parallel':
+            lines += fact.about
+            count += 1
+            facts.remove(fact)
+    if count:
+        facts.append(Fact(str(count) + ' pairs of parallel lines', lines))
+
+
+def acute_angles_count(facts):
+    count = 0
+    angles = []
+    for fact in facts:
+        if fact.fact == '1 angle is acute angle':
+            angles += fact.about
+            count += 1
+    if count:
+        facts.append(Fact(str(count) + ' angles are acute angle', angles))
+
+
+def right_angles_count(facts):
+    count = 0
+    angles = []
+    for fact in facts:
+        if fact.fact == '1 angle is right angle':
+            angles += fact.about
+            count += 1
+    if count:
+        facts.append(Fact(str(count) + ' angles are right angle', angles))
 
 
 def about_angle(facts, line1, line2):
     if is_parallel(line1, line2):
-        facts.append(Fact('two lines are parallel', [line1, line2]))
+        facts.append(Fact('2 lines are parallel', [line1, line2]))
     elif is_vertical(line1, line2):
-        # facts.append(Fact('two lines are vertical', [line1, line2]))
-        facts.append(Fact('one angle is right angle', [line1, line2]))
+        facts.append(Fact('1 angle is right angle', [line1, line2]))
     elif is_acute(line1, line2):
-        facts.append(Fact('one angle is acute angle', [line1, line2]))
+        facts.append(Fact('1 angle is acute angle', [line1, line2]))
     elif is_obtuse(line1, line2):
-        facts.append(Fact('one angle is obtuse angle', [line1, line2]))
+        facts.append(Fact('1 angle is obtuse angle', [line1, line2]))
 
 
 def about_length(facts, line1, line2):
     if is_equal(line1, line2):
-        facts.append(Fact('two lines are equal', [line1, line2]))
+        facts.append(Fact('2 lines are equal', [line1, line2]))
 
 
 def generate_contour_facts(lines):
@@ -221,6 +254,9 @@ def generate_contour_facts(lines):
             about_angle(angle_facts, lines[i], lines[j])
     lines_closure(line_facts, lines)
     lines_all_equal(line_facts, lines)
+    parallel_line_pairs(angle_facts)
+    acute_angles_count(angle_facts)
+    right_angles_count(angle_facts)
     return line_facts, angle_facts
 
 
@@ -252,6 +288,7 @@ class FactGenerator:
 
     def __init__(self, contour_dict):
         self.contour_dict = contour_dict
+        self.handled_facts = {}
         self.file = open('../facts/facts.txt', 'w+')
 
     def __del__(self):
@@ -259,12 +296,11 @@ class FactGenerator:
             self.file.close()
 
     def generate_fact(self):
-        handled_fact = {}
         for i in range(len(self.contour_dict)):
             lines = self.contour_dict.get(i)
             line_facts, angle_facts = generate_contour_facts(lines)
             cnt_fact = ContourFact(len(lines), line_facts, angle_facts)
-            handled_fact['Contour' + str(i)] = cnt_fact
+            self.handled_facts['Contour' + str(i)] = cnt_fact
             self.file.write('Contour #%d\n{\n' % i)
             self.file.write(str(cnt_fact))
 
@@ -274,7 +310,7 @@ equal_threshold = 5
 parallel_threshold = 5
 vertical_threshold = 5
 if __name__ == '__main__':
-    handler = Handler('../test/test41.png')
+    handler = Handler('../test/test40.png')
     handler.generate_contour_dict()
     generator = FactGenerator(handler.contour_dict)
     generator.generate_fact()
