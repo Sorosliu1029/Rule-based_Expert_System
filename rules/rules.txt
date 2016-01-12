@@ -29,9 +29,19 @@ THEN: 'the shape is obtuse triangle'
 DESCRIPTION: 'obtuse triangle'
 }
 {
-IF: ['the shape is acute triangle', 'the shape is equilateral triangle']
-THEN: 'the shape is acute and equilateral triangle'
-DESCRIPTION: 'acute and equilateral triangle'
+IF: ['the shape is right triangle', 'the shape is isosceles triangle']
+THEN: 'the shape is right and isosceles triangle'
+DESCRIPTION: 'right and isosceles triangle'
+}
+{
+IF: ['the shape is acute triangle', 'the shape is isosceles triangle']
+THEN: 'the shape is acute and isosceles triangle'
+DESCRIPTION: 'acute and isosceles triangle'
+}
+{
+IF: ['the shape is obtuse triangle', 'the shape is isosceles triangle']
+THEN: 'the shape is obtuse and isosceles triangle'
+DESCRIPTION: 'obtuse and isosceles triangle'
 }
 {
 IF: ['4 closure lines']

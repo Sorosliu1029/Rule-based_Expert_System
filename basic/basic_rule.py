@@ -26,9 +26,10 @@ class Rule:
 
     def __str__(self):
         s = ''
+        s += ('Rule: #%d\n' % self.id)
         if self.description:
             s += ('Description: %s\n' % self.description)
-        s += ('Rule: #%d\nIF\t\t' % self.id)
+        s += 'IF\t\t'
         for ant in self.antecedent:
             s += ('%s\n' % ant)
             if ant != self.antecedent[-1]:

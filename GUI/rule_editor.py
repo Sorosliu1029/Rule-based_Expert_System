@@ -24,7 +24,6 @@ class EditorFrame(wx.Frame):
                                                           wx.MAXIMIZE_BOX))
         self.SetSize(size)
         self.Center()
-        # todo file choice button
         self.ifLabel = wx.StaticText(self, label='IF: ', pos=(10, 30), size=(40, 50))
         self.thenLabel = wx.StaticText(self, label='THEN: ', pos=(10, 250), size=(40, 50))
         self.descriptionLabel = wx.StaticText(self, label='Description: ', pos=(10, 280), size=(40, 50))
@@ -35,7 +34,6 @@ class EditorFrame(wx.Frame):
         self.createButton.Bind(wx.EVT_BUTTON, self.create_rule)
         self.cancelButton = wx.Button(self, label='Cancel', pos=(385, 320), size=(130, 30))
         self.cancelButton.Bind(wx.EVT_BUTTON, self.cancel_creation)
-        self.Show()
 
     def create_rule(self, event):
         with open('../rules/rules.txt', 'a') as f:
