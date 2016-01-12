@@ -235,7 +235,13 @@ some angle facts  here
         * 直角梯形：  
             ![right_trapezoid](https://github.com/Sorosliu1029/Rule-based_Expert_System/blob/master/readme_picture/right_trapezoid.png) 
 3. 五边形：
-4. 六边形：
+    ![pentagon](https://github.com/Sorosliu1029/Rule-based_Expert_System/blob/master/readme_picture/pentagon.png)
+    * 正五边形：  
+    ![regular_pentagon](https://github.com/Sorosliu1029/Rule-based_Expert_System/blob/master/readme_picture/regular_pentagon.png)
+4. 六边形：  
+    ![hexagon](https://github.com/Sorosliu1029/Rule-based_Expert_System/blob/master/readme_picture/hexagon.png)
+    * 正六边形：   
+    ![regular_hexagon](https://github.com/Sorosliu1029/Rule-based_Expert_System/blob/master/readme_picture/regular_hexagon.png)
 
 ### <a name='conclusion'></a>总结
 
