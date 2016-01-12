@@ -1,4 +1,12 @@
+#!/usr/bin/python
 # encoding:utf-8
+# -*- Mode: Python -*-
+# Author: Soros Liu <soros.liu1029@gmail.com>
+
+# ==================================================================================================
+# Copyright 2016 by Soros Liu
+#
+#                                                                          All Rights Reserved
 """
 
 """
@@ -8,7 +16,7 @@ sys.path.append('..')
 from basic.basic_rule import Rule
 from Picture_handler.cv_handler2 import Handler, FactGenerator
 
-__author__ = 'liuyang'
+__author__ = 'Soros Liu'
 
 
 re_a_rule = re.compile(r'(\{.*?\})')
