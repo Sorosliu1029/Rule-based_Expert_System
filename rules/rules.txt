@@ -54,6 +54,11 @@ THEN: 'the shape is parallelogram'
 DESCRIPTION: 'parallelogram'
 }
 {
+IF: ['the shape is parallelogram', 'lines are all equal']
+THEN: 'the shape is rhombus'
+DESCRIPTION: 'rhombus'
+}
+{
 IF: ['the shape is parallelogram', '4 angles are right angle']
 THEN: 'the shape is rectangle'
 DESCRIPTION: 'rectangle'

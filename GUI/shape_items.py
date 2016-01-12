@@ -54,7 +54,9 @@ tree = [
         ['parallelogram', [
             ['rectangle', [
                 'square',
-            ]]]],
+            ]],
+            'rhombus',
+        ]],
         ['trapezoid', [
             'isosceles trapezoid',
             'right trapezoid',

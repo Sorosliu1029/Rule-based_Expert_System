@@ -36,6 +36,8 @@ def get_result(results):
 def get_matched_facts(facts, contour_num):
     s = ''
     for i in range(contour_num):
+        if facts['Contour' + str(i)]:
+            s += '---- Shape %d ----\n' % i
         for fact in facts['Contour' + str(i)]:
             s += (fact.fact + '\n')
     return s
@@ -44,6 +46,8 @@ def get_matched_facts(facts, contour_num):
 def get_hit_rules(rules, contour_num):
     s = ''
     for i in range(contour_num):
+        if rules['Contour' + str(i)]:
+            s += '---- Shape %d ----\n' % i
         for rule in rules['Contour' + str(i)]:
             s += str(rule)
     return s

@@ -24,6 +24,8 @@ class EditorFrame(wx.Frame):
                                                           wx.MAXIMIZE_BOX))
         self.SetSize(size)
         self.Center()
+        self.ps = wx.StaticText(self, label='IF part using \'AND\' to combine antecedent. Please ONE antecedent per line',
+                                pos=(10, 5), size=(40 ,100))
         self.ifLabel = wx.StaticText(self, label='IF: ', pos=(10, 30), size=(40, 50))
         self.thenLabel = wx.StaticText(self, label='THEN: ', pos=(10, 250), size=(40, 50))
         self.descriptionLabel = wx.StaticText(self, label='Description: ', pos=(10, 280), size=(40, 50))
