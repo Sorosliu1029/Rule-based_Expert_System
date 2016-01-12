@@ -9,16 +9,22 @@
 ### 目录
 1. [概述](#general)
 2. [图形检测专家系统的结构](#structure)
-2. [规则的构建和表示](#rule)
-3. 
+3. [规则的构建和表示](#rule)
+4. [知识库的表示](#knowledge)
+5. [图形的预处理](#pic_handle)
+6. [数据库的表示](#fact)
+7. [推理引擎的构建 : 后向链接推理技术](#back)
+8. [用户界面](#GUI)
+9. [测试用例](#test)
+10. [总结](#conclusion)
 
 ### <a name='general'></a>概述
 图形检测专家系统的运作流程为：  
 
 * 通过图形预处理得到一组基本事实（即图形中各线段端点坐标）
-* 处理这一组基本事实，产生专家系统的事实库
-* 推理引擎读取外部的规则文档，产生规则库
-* 推理引擎读入事实库
+* 处理这一组基本事实，产生专家系统的数据库
+* 推理引擎读取外部的规则文档，产生知识库
+* 推理引擎读入数据库
 * 采用后向链接推理技术进行推理
 * 推理过程中记录触发的规则和符合规则的事实
 * 绘制出用户所要检测的图形的位置
@@ -59,9 +65,26 @@
 ### <a name='structure'></a>图形检测专家系统的结构
 图形检测专家系统的结构尽可能模仿了书中展示的**基于规则的专家系统的基本结构**。
 具体结构如下：  
-![structure](https://github.com/Sorosliu1029/Rule-based_Expert_System/blob/master/readme_picture/structure.png)
+![structure](https://github.com/Sorosliu1029/Rule-based_Expert_System/blob/master/readme_picture/structure.png)  
+图形检测专家系统也由5部分组成：[知识库Knowledge base](https://github.com/Sorosliu1029/Rule-based_Expert_System/blob/master/rules/rules.txt), [数据库Database](https://github.com/Sorosliu1029/Rule-based_Expert_System/blob/master/facts/facts.txt), [推理引擎Inference engine](https://github.com/Sorosliu1029/Rule-based_Expert_System/blob/master/engine/inference_engine.py), [解释设备Explanation facilities, 用户界面User interface](https://github.com/Sorosliu1029/Rule-based_Expert_System/blob/master/GUI/main_frame.py).  
+对应的项目文件夹分别为rules, facts, engine, GUI。  
+另外，由于图形的特殊性，项目文件中还包含[图形预处理器](https://github.com/Sorosliu1029/Rule-based_Expert_System/blob/master/Picture_handler/cv_handler2.py).
 
 ### <a name='rule'></a>规则的构建和表示
-因为专家系统需要支持动态的加载规则库，所以检测规则不能硬编码在程序中，而是需要长期存储在外部文件中，并在推理引擎中加载。  
+因为专家系统需要支持动态的加载知识库，所以检测规则不能硬编码在程序中，而是需要长期存储在外部文件中，并在推理引擎中加载。  
 基于以上原因，首先构建了一个Rule类用来表示某条规则
+
+### <a name='knowledge'></a>知识库的表示
+
+### <a name='pic_handle'></a>图形的预处理
+
+### <a name='fact'></a>数据库的表示
+
+### <a name='back'></a>推理引擎的构建 : 后向链接推理技术
+
+### <a name='GUI'></a>用户界面
+
+### <a name='test'></a>测试用例
+
+### <a name='conclusion'></a>总结
 
